@@ -1,0 +1,32 @@
+target
+localrun
+.classpath
+.project
+.settings
+.mysqlPid
+.DS_Store
+
+src/client/node_modules
+src/client/dist
+
+src/main/webapp/favicon.ico
+src/main/webapp/index.html
+src/main/webapp/js/
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
