@@ -23,6 +23,8 @@
 	<button v-for="i in pagingButtons" v-bind:key="i" v-on:click="pageButton(i)" v-bind:style="{ color: (i==pageNo?'red':'black')}">
 		{{i}}
 	</button>
+	<hr />
+	<button v-on:click="newEnityButton">New entity</button>
 </div>
 </template>
 
@@ -104,6 +106,9 @@ export default {
 				this.sortOrder = "asc"
 			}
 			this.fetchData()
+		},
+		newEnityButton() {
+			this.$router.push({ path: 'edit/new' })
 		}
 	}
 }

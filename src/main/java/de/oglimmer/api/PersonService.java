@@ -9,7 +9,9 @@ import javax.json.Json;
 import javax.json.bind.JsonbBuilder;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -27,6 +29,13 @@ public class PersonService {
 	de.oglimmer.service.PersonService service;
 
 	@GET
+	@Path("{id}")
+	public Response get(@PathParam("id") long id) {
+		Person person = service.get(id);
+		return Response.ok(JsonbBuilder.create().toJson(person)).build();
+	}
+
+	@GET
 	public Response list(@QueryParam("surname") String searchSurname, @QueryParam("firstname") String searchFirstname,
 			@QueryParam("pageNo") int pageNo, @QueryParam("sortCol") String sortCol,
 			@QueryParam("sortOrder") String sortOrder, @QueryParam("sizeOnly") boolean sizeOnly) throws SQLException {
@@ -40,6 +49,12 @@ public class PersonService {
 			List<Person> list = service.list(searchSurname, searchFirstname, pageNo, sortCol, sortOrder);
 			return Response.ok(JsonbBuilder.create().toJson(list)).build();
 		}
+	}
+
+	@POST
+	public Response save(Person person) {
+		service.save(person);
+		return Response.ok(JsonbBuilder.create().toJson(person)).build();
 	}
 
 }

@@ -160,4 +160,12 @@ public class Person implements Serializable {
 		this.communicationChannels = communicationChannels;
 	}
 
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", version=" + version + ", firstname=" + firstname + ", surname=" + surname
+				+ ", street=" + street + ", zip=" + zip + ", city=" + city + ", height=" + height + ", birthday="
+				+ birthday + ", createdDate=" + createdDate + ", lastUpdate=" + lastUpdate + ", communicationChannels="
+				+ communicationChannels + "]";
+	}
+
 }
