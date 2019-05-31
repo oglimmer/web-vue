@@ -20,7 +20,7 @@
 		<tr v-for="person in personList" v-bind:key="person.id">
 			<td>{{ person.surname }}</td>
 			<td>{{ person.firstname }}</td>
-			<td><button v-on:click="edit(person.id)">Edit</button></td>
+			<td><button v-on:click="view(person.id)">View</button></td>
 		</tr>
 	</table>
 	<button v-on:click="searchButton">Search</button>
@@ -115,13 +115,9 @@ export default {
 		newEnityButton() {
 			this.$router.push({ path: 'edit/new' })
 		},
-		edit(id) {
-			this.$router.push({ path: `edit/${id}` })	
+		view(id) {
+			this.$router.push({ path: `view/${id}` })
 		}
 	}
 }
 </script>
-
-<style scoped>
-
-</style>

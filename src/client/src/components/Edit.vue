@@ -9,7 +9,7 @@
 		Height: <input v-model="data.height" /> <span v-show="err.height">{{err.height}}</span><br/>
 		Birthday: <datepicker v-model="data.birthday" format="dd.MM.yyyy" :use-utc="true" :clear-button="true"></datepicker> <span v-show="err.birthday">{{err.birthday}}</span><br/>
 
-		<button v-on:click="cancel">Cancel</button>
+		<button v-on:click="back">Cancel</button>
 		<button v-on:click="save">Save</button>
 		<button v-on:click="toPage2">Next</button>
 	</div>
@@ -22,7 +22,7 @@
 			</tr>
 		</table>
 		
-		<button v-on:click="cancel">Cancel</button>
+		<button v-on:click="back">Cancel</button>
 		<button v-on:click="addRow">Add row</button>
 		<button v-on:click="save">Save</button>
 		<button v-on:click="toPage1">Back</button>
@@ -44,7 +44,7 @@ const prepareForRest = (obj) =>
     .reduce((newObj, k) =>
       (obj[k] instanceof Date ? Object.assign(newObj, {[k]: dayjs(obj[k]).utc().format('YYYY-MM-DD') }) :
       (typeof obj[k] === 'object' && !Array.isArray(obj[k]) ?
-        Object.assign(newObj, {[k]: removeEmpty(obj[k])}) :
+        Object.assign(newObj, {[k]: prepareForRest(obj[k])}) :
         Object.assign(newObj, {[k]: obj[k]}))),
       {})
 
@@ -73,8 +73,6 @@ export default {
 	mounted() {
 		this.fetchData()
 	},
-	computed: {
-	},
 	methods: {
 		fetchData() {
 			const id = this.$route.params.id
@@ -85,8 +83,12 @@ export default {
 				})
 			}
 		},
-		cancel() {
-			this.$router.push({ path: '../' })
+		back() {
+			if(this.data.id) {
+				this.$router.push({ path: `../view/${this.data.id}` })
+			} else {
+				this.$router.push({ path: '../' })
+			}
 		},
 		validate() {
 			this.err = {}
@@ -99,8 +101,10 @@ export default {
 			if(this.validate()) {
 				const url = location.port == 8081 ? `http://localhost:8080/vue/resources/person` : `resources/person`
 				const objToTransRest = prepareForRest(this.data)
-				objToTransRest.communicationChannels = objToTransRest.communicationChannels.filter(e => e.type && e.data)
-				axios.post(url, objToTransRest).then(() => this.$router.push({ path: '../' }))
+				if(objToTransRest.communicationChannels) {
+					objToTransRest.communicationChannels = objToTransRest.communicationChannels.filter(e => e.type && e.data)
+				}
+				axios.post(url, objToTransRest).then(() => this.back())
 			}
 		},
 		addRow() {
