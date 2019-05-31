@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "rm ../main/webapp/js/* ; vue-cli-service build --no-clean",
+    "build": "rm ../main/webapp/js/* ; rm ../main/webapp/css/* ; vue-cli-service build --no-clean",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
