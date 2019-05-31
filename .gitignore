@@ -12,6 +12,7 @@ src/client/dist
 src/main/webapp/favicon.ico
 src/main/webapp/index.html
 src/main/webapp/js/
+src/main/webapp/css/
 
 # local env files
 .env.local
