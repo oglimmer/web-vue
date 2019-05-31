@@ -6,7 +6,6 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.json.Json;
-import javax.json.bind.JsonbBuilder;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -31,8 +30,8 @@ public class PersonService {
 	@GET
 	@Path("{id}")
 	public Response get(@PathParam("id") long id) {
-		Person person = service.get(id);
-		return Response.ok(JsonbBuilder.create().toJson(person)).build();
+		Person person = service.getFull(id);
+		return Response.ok(person).build();
 	}
 
 	@GET
@@ -47,14 +46,15 @@ public class PersonService {
 				pageNo = 1;
 			}
 			List<Person> list = service.list(searchSurname, searchFirstname, pageNo, sortCol, sortOrder);
-			return Response.ok(JsonbBuilder.create().toJson(list)).build();
+			return Response.ok(list).build();
 		}
 	}
 
 	@POST
 	public Response save(Person person) {
+		person.getCommunicationChannels().forEach(e -> e.setPerson(person));
 		service.save(person);
-		return Response.ok(JsonbBuilder.create().toJson(person)).build();
+		return Response.ok(person).build();
 	}
 
 }

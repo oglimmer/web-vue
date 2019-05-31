@@ -8,14 +8,19 @@
 			<th>
 				<SortableHeader displayText="Firstname" colName="firstname" :onclick="sortButton" :sortCol="sortCol" :sortOrder="sortOrder" />
 			</th>
+			<th>
+			</th>
 		</tr>
 		<tr>
 			<th><input v-model="surname" /></th>
 			<th><input v-model="firstname" /></th>
+			<th>
+			</th>
 		</tr>
 		<tr v-for="person in personList" v-bind:key="person.id">
 			<td>{{ person.surname }}</td>
 			<td>{{ person.firstname }}</td>
+			<td><button v-on:click="edit(person.id)">Edit</button></td>
 		</tr>
 	</table>
 	<button v-on:click="searchButton">Search</button>
@@ -109,6 +114,9 @@ export default {
 		},
 		newEnityButton() {
 			this.$router.push({ path: 'edit/new' })
+		},
+		edit(id) {
+			this.$router.push({ path: `edit/${id}` })	
 		}
 	}
 }

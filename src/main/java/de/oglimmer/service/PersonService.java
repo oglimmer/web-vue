@@ -3,7 +3,6 @@ package de.oglimmer.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.annotation.sql.DataSourceDefinition;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;

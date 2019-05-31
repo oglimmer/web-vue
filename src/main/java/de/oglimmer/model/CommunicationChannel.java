@@ -3,6 +3,7 @@ package de.oglimmer.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,6 +28,7 @@ public class CommunicationChannel implements Serializable {
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "person_id", nullable = false)
+	@JsonbTransient
 	private @NotNull Person person;
 
 	@Column(nullable = false)
@@ -89,6 +91,12 @@ public class CommunicationChannel implements Serializable {
 
 	public void setLastUpdate(Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
+	}
+
+	@Override
+	public String toString() {
+		return "CommunicationChannel [id=" + id + ", person=" + (person != null ? person.getId() : "null") + ", type="
+				+ type + ", data=" + data + ", createdDate=" + createdDate + ", lastUpdate=" + lastUpdate + "]";
 	}
 
 }
